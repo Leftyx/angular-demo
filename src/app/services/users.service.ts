@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { map, Observable } from 'rxjs';
+import { catchError, EMPTY, map, Observable, retry } from 'rxjs';
 
 import { User, UserResult } from '../model';
 
@@ -12,15 +12,18 @@ export class UsersService {
 
   constructor(private readonly http: HttpClient) { }
 
-  public getApiUsers(): Observable<UserResult> {
-    const result = this.http.get<UserResult>('https://randomuser.me/api/?nat=us&results=5');
-    // // .pipe(
-    // //   switchMap((result: UserResult): Observable<User[]> => {
-    // //     const x = result.results || [];
-    // //     return x;
-    // //   }),
-    // // );
-    return result;
+  public getApiUsers(searchTerm: string): Observable<User[]> {
+    return this.http.get<UserResult>('zhttps://randomuser.me/api/?nat=us&results=5')
+      .pipe(
+        retry(3),
+        map((apiResult: UserResult) => {
+          return apiResult?.results || [];
+        }),
+        catchError((reason: Error) => {
+          console.log('Error: ', reason.message);
+          return EMPTY;
+        })
+      );
   }
 
   public getApiPaginatedUsers(page: number): Observable<User[]> {

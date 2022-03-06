@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { BehaviorSubject, debounceTime, distinctUntilChanged, EMPTY, filter, map, Observable, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, EMPTY, filter, map, Observable, Subscription, switchMap } from 'rxjs';
 
 import { User } from './model';
 import { UsersService } from './services/users.service';
@@ -18,38 +18,40 @@ export class AppComponent implements OnInit {
   search$ = new Subscription();
   users$: Observable<User[]> = EMPTY;
 
-  getUsers$: Subscription = new Subscription();
-  usubscribe$: Subject<void> = new Subject();
+  usersSubscription$: Subscription = new Subscription();
   currentPage$ = new BehaviorSubject<number>(1);
 
   constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
-    // this.trackSearchChanges();
-    // this.getAllUsers();
-    this.users$ = this.currentPage$.pipe(
-      switchMap((currentPage) =>
-        this.usersService.getApiPaginatedUsers(currentPage)
-      ),
-      // // map((result: UserResult) => result.results || [])
-    );
+    this.trackSearchChanges();
+    // this.loadUsersPaginated();
   }
 
   private trackSearchChanges(): void {
-    this.search$ = this.search.valueChanges.pipe(
+    this.usersSubscription$ = this.search.valueChanges.pipe(
       map((searchTerm: string) => {
-        // console.log('Trimming Value', searchTerm);
-        return searchTerm.trim();
+        return searchTerm?.trim() && '';
       }),
       debounceTime(500),
       distinctUntilChanged(),
       filter((searchTerm: string) => {
-        return !!searchTerm;
+        return !searchTerm.startsWith('*');
       }),
-      takeUntil(this.usubscribe$),
-      switchMap((searchTerm: string) => this.users$ = this.usersService.getStreamOfRandomUsers(searchTerm))
+      switchMap((searchTerm: string) => {
+        this.users$ = this.usersService.getApiUsers(searchTerm);
+        return this.users$;
+      })
     )
-      .subscribe();
+    .subscribe();
+  }
+
+  private loadUsersPaginated(): void {
+    this.users$ = this.currentPage$.pipe(
+      switchMap((currentPage) =>
+        this.usersService.getApiPaginatedUsers(currentPage)
+      ),
+    );
   }
 
   public previousPage(): void {
@@ -84,8 +86,13 @@ export class AppComponent implements OnInit {
   //   //   .subscribe();
   // }
 
-  public stopTimer() {
-    this.usubscribe$.next();
-    this.usubscribe$.complete();
+  public stopSubscription(): void {
+    if (this.usersSubscription$ && !this.usersSubscription$.closed) {
+      this.usersSubscription$.unsubscribe();
+    }
+  }
+
+  public stopTimer(): void {
+    return;
   }
 }
