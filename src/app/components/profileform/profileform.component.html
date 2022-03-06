@@ -1,0 +1,15 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmitForm()">
+  <p>
+    <label for="first-name">First Name:</label>
+    <input type="text" id="first-name" formControlName="firstName">
+  </p>
+  <p>
+    <label for="last-name">Last Name:</label>
+    <input type="text" id="last-name" formControlName="lastName">
+  </p>
+  <button type="submit">Submit</button>
+
+  <div>
+    {{ profileForm.value | json }}
+  </div>
+</form>

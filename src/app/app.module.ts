@@ -6,10 +6,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersService } from './services/users.service';
+import { ModalComponent } from './components/modal/modal.component';
+import { ProfileformComponent } from './components/profileform/profileform.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ModalComponent,
+    ProfileformComponent
   ],
   imports: [
     BrowserModule,

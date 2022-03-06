@@ -21,8 +21,21 @@
   <button (click)="previousPage()">Prev</button>
   <button (click)="nextPage()">Next</button>
 
+  <app-modal>
+    <div header>
+      <span>This is the header</span>
+    </div>
+    <div body>
+      <span>This is the body</span>
+    </div>
+    <div footer>
+      <span>This is the footer</span>
+    </div>
+  </app-modal>
 </div>
 
+<app-profileform>
 
+</app-profileform>
 
 <router-outlet></router-outlet>
