@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "**/node_modules": true,
+    },
+    "window.title": "${dirty}DEMO ANGULAR${separator}${activeEditorShort}${separator}${activeFolderMedium}",
+    "eslint.format.enable": true,
+    "eslint.run": "onSave",
+    "prettier.enable": false
+}

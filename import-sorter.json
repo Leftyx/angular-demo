@@ -1,0 +1,41 @@
+{
+  "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "importSorter.sortConfiguration.removeUnusedDefaultImports": true,
+  "importSorter.sortConfiguration.removeUnusedImports": true,
+  "importSorter.importStringConfiguration.tabType": "space",
+  "importSorter.importStringConfiguration.tabSize": 2,
+  "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 160,
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimitExceptIfOnlyOne",
+  "importSorter.generalConfiguration.exclude": ["polyfills.ts"],
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "type": "importMember",
+      "regex": "^$",
+      "orderLevel": 70
+    },
+    {
+      "regex": "^@angular",
+      "orderLevel": 10
+    },
+    {
+      "regex": "^ngx",
+      "orderLevel": 25
+    },
+    {
+      "regex": "^rxjs",
+      "orderLevel": 25
+    },
+    {
+      "regex": "^[.]",
+      "orderLevel": 40
+    },
+    {
+      "regex": "^src/app",
+      "orderLevel": 40
+    },
+    {
+      "regex": "^src/environments",
+      "orderLevel": 50
+    }
+  ]
+}

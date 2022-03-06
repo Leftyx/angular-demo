@@ -1,0 +1,28 @@
+<div class="content" role="main">
+
+  <input id="search" type="text" [formControl]="search">
+
+  <span>{{ title }}</span>
+
+  <ng-container *ngIf="currentPage$ | async as currentPage">
+    Current page: {{currentPage}}
+  </ng-container>
+
+  <ng-container *ngIf="users$ | async as users">
+    <ul>
+      <li *ngFor="let user of users">
+        {{user.name.first}}
+      </li>
+    </ul>
+  </ng-container>
+
+  <button (click)="stopTimer()">Stop It!</button>
+
+  <button (click)="previousPage()">Prev</button>
+  <button (click)="nextPage()">Next</button>
+
+</div>
+
+
+
+<router-outlet></router-outlet>
