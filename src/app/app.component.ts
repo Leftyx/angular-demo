@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       switchMap((currentPage) =>
         this.usersService.getApiPaginatedUsers(currentPage)
       ),
-      // map((result: UserResult) => result.results || [])
+      // // map((result: UserResult) => result.results || [])
     );
   }
 
