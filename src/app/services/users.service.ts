@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { interval, map, Observable, pipe, switchMap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { User, UserResult } from '../model';
 
@@ -14,12 +14,12 @@ export class UsersService {
 
   public getApiUsers(): Observable<UserResult> {
     const result = this.http.get<UserResult>('https://randomuser.me/api/?nat=us&results=5');
-    // .pipe(
-    //   switchMap((result: UserResult): Observable<User[]> => {
-    //     const x = result.results || [];
-    //     return x;
-    //   }),
-    // );
+    // // .pipe(
+    // //   switchMap((result: UserResult): Observable<User[]> => {
+    // //     const x = result.results || [];
+    // //     return x;
+    // //   }),
+    // // );
     return result;
   }
 
@@ -33,17 +33,17 @@ export class UsersService {
     return result;
   }
 
-  public getStreamOfRandomUsers(searchTerm: string): Observable<User[]> {
-    const result = interval(1000).pipe(
-      switchMap((value: number) => {
-        return this.getApiUsers(searchTerm);
-      }),
-      map((apiResult: UserResult) => {
-        return apiResult.results || [];
-      })
-    );
-    return result;
-  }
+  // public getStreamOfRandomUsers(searchTerm: string): Observable<User[]> {
+  //   const result = interval(1000).pipe(
+  //     switchMap((value: number) => {
+  //       return this.getApiUsers(searchTerm);
+  //     }),
+  //     map((apiResult: UserResult) => {
+  //       return apiResult.results || [];
+  //     })
+  //   );
+  //   return result;
+  // }
 
   // public getApiUsers2(searchTerm: string): Observable<User[]> {
   //   const result = this.http.get<UserResult>('https://randomuser.me/api/??nat=us&results=50')
