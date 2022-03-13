@@ -1,3 +1,7 @@
+<app-header>
+
+</app-header>
+
 <div class="content" role="main">
 
   <input id="search" type="text" [formControl]="search">
@@ -34,8 +38,9 @@
   </app-modal>
 </div>
 
-<app-profileform>
+<app-profileform></app-profileform>
 
-</app-profileform>
+<a [routerLink]="['home']">Home</a>
+<a [routerLink]="['about']">About</a>
 
 <router-outlet></router-outlet>
